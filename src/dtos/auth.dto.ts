@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
+import { IsEmail, IsNotEmpty, MinLength, Matches } from "class-validator";
 
 export class RegisterUserDTO {
     @IsNotEmpty()
@@ -8,9 +8,15 @@ export class RegisterUserDTO {
     @IsEmail()
     email: string;
 
-    @IsNotEmpty()
-    @MinLength(6, { message: "Password must be at least 6 characters long" })
+    @IsNotEmpty({ message: 'Password is required' })
+    @MinLength(8, { message: 'Password should be at least 8 characters long' })
+    @Matches(/[A-Z]/, { message: 'Password should contain at least one uppercase letter' })
+    @Matches(/[a-z]/, { message: 'Password should contain at least one lowercase letter' })
+    @Matches(/[0-9]/, { message: 'Password should contain at least one number' })
     password: string;
+
+    @IsNotEmpty()
+    telephone: string
 }
 
 export class LoginUserDTO {
