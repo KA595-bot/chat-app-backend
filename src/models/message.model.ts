@@ -12,7 +12,7 @@ const MessageSchema: Schema = new Schema({
     sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
     receiver: { type: Schema.Types.ObjectId, ref: "User", required: true },
     content: { type: String, required: true },
-    type: { type: String, enum: ["text", "file"], required: true },
+    type: { type: String, enum: ["text", "file"] },
     timestamp: { type: Date, default: Date.now },
 });
 
