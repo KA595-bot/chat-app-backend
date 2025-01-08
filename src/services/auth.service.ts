@@ -15,7 +15,7 @@ export const registerUserService = async (username: string, password: string, em
 
     const userWithoutPassword = {
         ...user.toObject(),
-        password: undefined, // Explicitly exclude password
+        password: undefined,
     };
 
     return { user: userWithoutPassword, accessToken, refreshToken };

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/database";
 import configureSocket from "./utils/socket.util";
 import authRoute from "./routes/auth.route";
+import chatRoute from "./routes/chat.route";
 
 dotenv.config();
 connectDB();
@@ -19,6 +20,8 @@ const io = new Server(server, {
 
 app.use(express.json());
 app.use("/api/auth", authRoute);
+app.use("/api/chat", chatRoute);
+
 configureSocket(io);
 
 const PORT = process.env.PORT || 5173;
