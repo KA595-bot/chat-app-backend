@@ -11,6 +11,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
             accessToken,
             refreshToken
         });
+
     } catch (error) {
         console.error("Error in registerUser:", error);
         res.status(500).json({ error: (error as Error).message });
@@ -19,7 +20,7 @@ export const registerUser = async (req: Request, res: Response, next: NextFuncti
 
 export const loginUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        const { email, password, telephone } = req.body;
+        const { email, password } = req.body;
 
         const { user, accessToken, refreshToken } = await loginUserService(email, password);
 
@@ -30,6 +31,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
             res.status(404).json({ error: errorMessage });
             return;
         }
+
         if (errorMessage === "Invalid credentials") {
             res.status(401).json({ error: errorMessage });
             return;

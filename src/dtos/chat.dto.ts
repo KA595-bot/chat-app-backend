@@ -9,9 +9,13 @@ export class MessageDTO {
     @IsString()
     receiver: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     content: string;
+
+    @IsNotEmpty()
+    @IsString()
+    chatMessage: string;
 
     @IsOptional()
     @IsEnum(["text", "file"])

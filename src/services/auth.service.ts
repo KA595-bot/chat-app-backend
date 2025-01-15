@@ -34,17 +34,17 @@ export const loginUserService = async (email: string, password: string) => {
 
     const userWithoutPassword = {
         ...user.toObject(),
-        password: undefined, // Explicitly exclude password
+        password: undefined,
     };
 
     const accessToken = generateAccessToken(user._id.toString());
     const refreshToken = generateRefreshToken(user._id.toString());
 
     return { user: userWithoutPassword, accessToken, refreshToken };
-}
+};
 
 export const requestPasswordReset = async (email: string) => {
-         const user  = await User.findOne({email});
+         const user  = await User.findOne({ email });
 
          if (!user) {
              throw new Error("User does not exist");
@@ -93,8 +93,12 @@ export const resetPassword = async (token: string, newPassword: string): Promise
         throw new Error('Password reset token is invalid or has expired');
     }
 
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(passwordString, salt);
+    const isSamePassword = await comparePassword(passwordString, user.password);
+    if (isSamePassword) {
+        throw new Error('New password must be different from the current password');
+    }
+
+    user.password = await hashPassword(passwordString);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
