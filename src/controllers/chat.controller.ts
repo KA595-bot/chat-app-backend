@@ -7,8 +7,8 @@ export const sendMessages = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { sender, receiver, content, type } = req.body;
-        const message = await sendMessageService(sender, receiver, content, type);
+        const { sender, receiver, content, type, chatMessage } = req.body;
+        const message = await sendMessageService(sender, receiver, content, type, chatMessage);
         res.status(200).json(message);
     } catch (error) {
         console.error(error);
