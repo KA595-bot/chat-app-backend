@@ -11,3 +11,4 @@ export const generateRefreshToken =(userId: string): string => {
         expiresIn: '7d'
     });
 }
+
