@@ -6,6 +6,8 @@ import connectDB from "./config/database";
 import configureSocket from "./utils/socket.util";
 import authRoute from "./routes/auth.route";
 import chatRoute from "./routes/chat.route";
+import groupRoute from "./routes/group.route";
+import reportRoute from "./routes/report.route";
 
 dotenv.config();
 connectDB();
@@ -21,6 +23,8 @@ export const io = new Server(server, {
 app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/chat", chatRoute);
+app.use("/api/group", groupRoute);
+app.use("/api/report", reportRoute);
 
 configureSocket(io);
 
