@@ -6,7 +6,7 @@ import { authenticateToken } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.post('/', authenticateToken, validateDTO(MessageDTO), sendMessages);
+router.post('/messages', authenticateToken, validateDTO(MessageDTO), sendMessages);
 router.get('/:senderId/:receiverId', authenticateToken, getMessages);
 
 export default router;
