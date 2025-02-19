@@ -13,5 +13,5 @@ const ReportSchema: Schema = new Schema({
     reason: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 })
-
+ReportSchema.index({ reporter: 1, reportedUser: 1 }, { unique: true });
 export default mongoose.model<IReport>("Report", ReportSchema)
