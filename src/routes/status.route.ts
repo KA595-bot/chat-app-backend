@@ -1,11 +1,12 @@
 import express from 'express';
-import { CreateStatus } from '../controllers/status.controller';
+import { CreateStatus, getUserStatuses, deleteUserStatus } from '../controllers/status.controller';
 import { upload } from '../utils/multerConfig';
 import { authenticateToken } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
-// Apply the upload middleware for image/video statuses
 router.post('/postStatus', authenticateToken, upload.single('file'), CreateStatus);
+router.get('/user/:userId/statuses', authenticateToken, getUserStatuses);
+router.delete('/user/:statusId', authenticateToken, deleteUserStatus);
 
 export default router;
