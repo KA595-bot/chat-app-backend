@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import { CreateStatusService } from "../services/status.service";
+import { CreateStatusService, getStatusService, deleteStatusService } from "../services/status.service";
+
 
 export const CreateStatus = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -42,3 +43,42 @@ export const CreateStatus = async (req: Request, res: Response): Promise<void> =
         res.status(500).json({ error: "Internal server error" });
     }
 };
+
+export const getUserStatuses = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { userId } = req.params;
+
+        if (!userId) {
+             res.status(400).json({ error: "User ID is required" });
+             return;
+        }
+
+        const statuses = await getStatusService(userId);
+        res.status(200).json({ message: "Statuses retrieved", statuses });
+        return;
+    } catch (error) {
+        console.error("Error getting status:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+export const deleteUserStatus = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { statusId } = req.params;
+        const { userId } = req.body; // Assuming userId is sent in the body
+
+        if (!statusId || !userId) {
+           res.status(400).json({ error: "Status ID and User ID are required" });
+           return;
+        }
+
+        const deletedStatus = await deleteStatusService(statusId, userId);
+        res.status(200).json({ message: "Status deleted", deletedStatus });
+        return;
+    } catch (error) {
+        console.error("Error deleting status:", error);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+    }
+};
+
